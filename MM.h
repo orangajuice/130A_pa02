@@ -48,45 +48,33 @@ class MM
 					T newmax = min.extract_root();
 					max.insert(newmax);
 					median = max.get_root();
-					minimum = max.get_min();
-					maximum = min.get_max();
-					// cout << "h"<<size1-size2 << endl;
 				}
 				if(def == -2) //mean that max has too more
 				{
 					T newmin = max.extract_root();
 					min.insert(newmin);
 					median = max.get_root();
-					minimum = max.get_min();
-					maximum = min.get_max();
-					// cout << "he"<<size1-size2 << endl;
 				}
 				if(def == 1)
 				{
 					median = min.get_root();
-					//check min
-					minimum = max.get_min();
-					//check max
-					maximum = min.get_max();
-					// cout << "her"<<size1-size2 << endl;
 				}
 				if(def == -1)
 				{
 					median = max.get_root();
-					//check min
-					minimum = max.get_min();
-					//check max
-					maximum = min.get_max();
-					// cout << "here"<<size1-size2 << endl;
 				}
 				if(def == 0)
 				{
 					median = max.get_root();
-					minimum = max.get_min();
-					maximum = min.get_max();
-					// cout << "here!"<<size1-size2 << endl;
 				}
 			}
+
+			if(a > maximum){
+				maximum = a;
+			}else if(a < minimum){
+				minimum = a;
+			}
+
 		}
 
 		void remove(T a)
