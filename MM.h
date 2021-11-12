@@ -12,9 +12,15 @@ template <class T>
 class MM
 {
 	public:
-		MM(): size1(0), size2(0) {};
-		MM(int a, int b) :
-			size1(a), size2(b) {};
+		MM(int a, int b)
+		{
+			size1 = a;
+			size2 = b;
+			heap<T> n1(0,true);
+			heap<T> n2(0,false);
+			min = n1;
+			max = n2;
+		}
 		void insert(T a)
 		{
 			if(size1==0&&size2==0)//speical case when two heaps are empty
@@ -72,6 +78,7 @@ class MM
 				}
 			}
 		}
+
 		void remove(T a)
 		{
 			if(a > median)
@@ -82,7 +89,7 @@ class MM
 			else
 			{
 				max.remove(a);
-				size2--
+				size2--;
 			}
 			int def = size1 - size2;
 			if(def==2 || def==-2)
@@ -117,9 +124,10 @@ class MM
 				maximum = min.get_max();
 			}
 		}
+
 		T get_median() {return median;}
-		T get_minimum() {return min;}
-		T get_maximum() {return max;}
+		T get_minimum() {return minimum;}
+		T get_maximum() {return maximum;}
 		int get_size(){return size1+size2;}
 		bool search(T a)
 		{
@@ -132,8 +140,6 @@ class MM
 				return max.search(a);
 			}
 		}
-		int leftIndex(int i){return 2*i + 1;}
-		int rightIndex(int i){return 2*i + 2;}
 	private:
 		int size1; //size of min
         int size2; //size of max

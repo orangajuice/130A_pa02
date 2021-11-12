@@ -1,4 +1,3 @@
-#include "heap.h"
 #include "MM.h"
 #include <iostream>
 #include <vector>
@@ -17,8 +16,8 @@ int main(int argc, char *argv[])
     {
         int size = 0;
         // std::vector<int> heap_array;
-        heap<int> mx(0, true);
-        heap<int> mi(0, false);
+        heap<int> mi(0, true);
+        heap<int> mx(0, false);
         while(getline(insertfile,insertword))
         {
             size += 1;
@@ -47,6 +46,7 @@ int main(int argc, char *argv[])
     {
         int size = 0;
         std::vector<int> heap_array;
+        // heap<int> n1(0,true), n2(0,false);
         MM<int> MMHeap(0,0);
         while(getline(insertfile,insertword))
         {
