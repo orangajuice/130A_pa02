@@ -21,6 +21,9 @@ class MM
 			min = n1;
 			max = n2;
 		}
+		T getsize1() {return size1;}
+		T getsize2() {return size2;}
+		bool gettype() {return max.gettype();}
 		void insert(T a)
 		{
 			if(size1==0&&size2==0)//speical case when two heaps are empty
@@ -45,22 +48,23 @@ class MM
 				}
 				//check balance
 				int def = size1 - size2;
-				if(def==2||def==-2) //rebalance
+				if(def == 2) //mean that min has too more
 				{
-					if(def > 1) //mean that min has too more
-					{
-						T newmax = min.extract_root();
-						max.insert(newmax);
-						median = max.get_root();
-					}
-					else if(def < 1) //mean that max has too more
-					{
-						T newmin = max.extract_root();
-						min.insert(newmin);
-						median = max.get_root();
-					}
+					T newmax = min.extract_root();
+					max.insert(newmax);
+					median = max.get_root();
+					minimum = max.get_min();
+					maximum = min.get_max();
 				}
-				else if(def==1)
+				if(def == -2) //mean that max has too more
+				{
+					T newmin = max.extract_root();
+					min.insert(newmin);
+					median = max.get_root();
+					minimum = max.get_min();
+					maximum = min.get_max();
+				}
+				if(def == 1)
 				{
 					median = min.get_root();
 					//check min
@@ -68,12 +72,18 @@ class MM
 					//check max
 					maximum = min.get_max();
 				}
-				else if(def == -1)
+				if(def == -1)
 				{
 					median = max.get_root();
 					//check min
 					minimum = max.get_min();
 					//check max
+					maximum = min.get_max();
+				}
+				if(def == 0)
+				{
+					median = max.get_root();
+					minimum = max.get_min();
 					maximum = min.get_max();
 				}
 			}
@@ -99,12 +109,16 @@ class MM
 					T newmax = min.extract_root();
 					max.insert(newmax);
 					median = max.get_root();
+					minimum = max.get_min();
+					maximum = min.get_max();
 				}
 				else if(def < -1)
 				{
 					T newmin = max.extract_root();
 					min.insert(newmin);
 					median = max.get_root();
+					minimum = max.get_min();
+					maximum = min.get_max();
 				}
 			}
 			else if(def==1)
@@ -123,13 +137,19 @@ class MM
 				//check max
 				maximum = min.get_max();
 			}
+			else if(def==0)
+			{
+				median = max.get_root();
+				minimum = max.get_min();
+				maximum = min.get_max();
+			}
 		}
 
 		T get_median() {return median;}
 		T get_minimum() {return minimum;}
 		T get_maximum() {return maximum;}
 		int get_size(){return size1+size2;}
-		bool search(T a)
+		int search(T a)
 		{
 			if(a > median)
 			{

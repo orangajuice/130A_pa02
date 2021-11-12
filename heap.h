@@ -11,14 +11,13 @@ template <class T>
 class heap
 {
 	public:
-		static const int SMALL = -999999;
-		static const int BIG = 999999;
 		heap() : size(0) {}
 		heap(int length, bool min_or_not)
 		{
 			size = length;
 			is_min = min_or_not;
 		}
+		bool gettype() {return is_min;}
 		void insert(T a)
 		{
 			if(is_min == true)
@@ -54,7 +53,7 @@ class heap
 			if(is_min == true)
 			{
 				int i = search(a);
-				newheap[i] = SMALL;
+				newheap[i] = INT32_MIN;
 				while(i != 0 && newheap[parent(i)]>newheap[i])
 				{
 					swap(&newheap[i], &newheap[parent(i)]);
@@ -65,7 +64,7 @@ class heap
 			else
 			{
 				int i = search(a);
-				newheap[i] = BIG;
+				newheap[i] = INT32_MAX;
 				while(i != 0 && newheap[parent(i)]<newheap[i])
 				{
 					swap(&newheap[i], &newheap[parent(i)]);

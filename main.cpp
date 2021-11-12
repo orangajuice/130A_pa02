@@ -60,11 +60,13 @@ int main(int argc, char *argv[])
             MMHeap.remove(stoi(removeword));
         }
         removefile.close();
-
+        cout << "size1: " << MMHeap.getsize1()<<endl;
+        //cout << "position: " << MMHeap.search(252) << endl;
         cout << "MinMedianMaxSketch:" << endl;
         cout << "Size = " << MMHeap.get_size() << endl;
         cout << "Min = " << MMHeap.get_minimum() << endl;
-        cout << "Max = " << MMHeap.get_maximum() << endl;
+        // cout << "Max = " << MMHeap.get_maximum() << endl;
+        // cout << "Median = " << MMHeap.get_median() << endl;
     }
     return 0;
 }
