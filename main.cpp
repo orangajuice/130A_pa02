@@ -44,29 +44,26 @@ int main(int argc, char *argv[])
     }
     else if(heaptype == "minmedianmax")
     {
-        int size = 0;
         std::vector<int> heap_array;
         // heap<int> n1(0,true), n2(0,false);
-        MM<int> MMHeap(0,0);
+        MM<int> MMHeap;
         while(getline(insertfile,insertword))
         {
-            size += 1;
             MMHeap.insert(stoi(insertword));
         }
         insertfile.close();
+        // cout << "Size = " << MMHeap.getsize1()+MMHeap.getsize2() << endl;
         while(getline(removefile,removeword))
         {
-            size -= 1;
             MMHeap.remove(stoi(removeword));
         }
         removefile.close();
-        cout << "size1: " << MMHeap.getsize1()<<endl;
         //cout << "position: " << MMHeap.search(252) << endl;
         cout << "MinMedianMaxSketch:" << endl;
         cout << "Size = " << MMHeap.get_size() << endl;
         cout << "Min = " << MMHeap.get_minimum() << endl;
-        // cout << "Max = " << MMHeap.get_maximum() << endl;
-        // cout << "Median = " << MMHeap.get_median() << endl;
+        cout << "Max = " << MMHeap.get_maximum() << endl;
+        cout << "Median = " << MMHeap.get_median() << endl;
     }
     return 0;
 }
