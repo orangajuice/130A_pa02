@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    string heaptype;
+    string heaptype = argv[1];
     string insertword;
     string removeword;
     ifstream insertfile(argv[2]);

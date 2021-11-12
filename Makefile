@@ -1,6 +1,8 @@
-all: project2
+EXE = a.out
 
-project2: main.cpp
+all: a.out
+
+a.out: main.cpp
 	g++ -std=c++11 $^ -o $@
 
 clean:
