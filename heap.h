@@ -1,3 +1,4 @@
+// Author: Xianqi Wang, Guang Yang
 #ifndef HEAP_H
 #define HEAP_H
 
@@ -11,71 +12,53 @@ template <class T>
 class heap
 {
 	public:
-		heap() : size(0) {}
+		heap() : size(0) {} // default constructor
 		heap(int length, bool min_or_not)
 		{
 			size = length;
 			is_min = min_or_not;
 		}
+		
 		bool gettype() {return is_min;}
+
 		void insert(T a)
 		{
-			if(is_min == true)
+			// first insert it at the end of heap
+			size++;
+			int i = size - 1;
+			newheap.resize(size);
+			newheap[i] = a;
+
+			if(is_min == true)// if minHeap
 			{
-				size++;
-				int i = size - 1;
-				newheap.resize(size);
-
-				newheap[i] = a;
-
-				while(i!=0 && newheap[parent(i)]>newheap[i])
+				while(i!=0 && newheap[parent(i)]>newheap[i])//bubble up when the current node is smaller than its parent
 				{
 					swap(&newheap[i],&newheap[parent(i)]);
 					i = parent(i);
 				}
 			}
-			else
+			else// if maxHeap
 			{
-				size++;
-				int i = size - 1;
-				newheap.resize(size);
+				while(i != 0 && newheap[parent(i)]<newheap[i])
+				{ // bubble up if the current node is greater than its parent
+					swap(&newheap[i], &newheap[parent(i)]);
+					i = parent(i);
+				}
+			}
+		}
 
-				newheap[i] = a;
-				while(i != 0 && newheap[parent(i)]<newheap[i])
-				{
-					swap(&newheap[i], &newheap[parent(i)]);
-					i = parent(i);
-				}
+		void remove(T a){
+			int i = search(a); // find the position
+			while(i != 0){ // bubble the node to the root
+				swap(&newheap[i], &newheap[parent(i)]);
+				i = parent(i);
 			}
+			extract_root(); // delete the root
 		}
-		void remove(T a)
+
+		void heapify(int i) // heapify the subtree at index i
 		{
-			if(is_min == true)
-			{
-				int i = search(a);
-				newheap[i] = INT32_MIN;
-				while(i != 0 && newheap[parent(i)]>newheap[i])
-				{
-					swap(&newheap[i], &newheap[parent(i)]);
-					i = parent(i);
-				}
-				extract_root();
-			}
-			else
-			{
-				int i = search(a);
-				newheap[i] = INT32_MAX;
-				while(i != 0 && newheap[parent(i)]<newheap[i])
-				{
-					swap(&newheap[i], &newheap[parent(i)]);
-					i = parent(i);
-				}
-				extract_root();
-			}
-		}
-		void heapify(int i)
-		{
-			if(is_min == true)
+			if(is_min)
 			{
 				int l = left(i);
 				int r = right(i);
@@ -117,15 +100,15 @@ class heap
 		T get_root() {return newheap[0];}
 		T extract_root()
 		{
-			int root = newheap[0];
-			newheap[0] = newheap[size-1];
+			T root = newheap[0];
+			newheap[0] = newheap[size-1]; // put the last node to the root
 			size--;
 			newheap.resize(size);
-			heapify(0);
+			heapify(0); // and start heapify
 			return root;
 		}	
 		T get_min()
-		{
+		{ // linear search for a min: O(n)
 			T min = newheap[0];
 			for(unsigned int i=0;i<size;i++)
 			{
@@ -137,7 +120,7 @@ class heap
 			return min;
 		}
 		T get_max()
-		{
+		{ // linear search for a max: O(n)
 			T max = newheap[0];
 			for(unsigned int i=0;i<size;i++)
 			{
@@ -150,8 +133,9 @@ class heap
 		}
 
 		int get_size() {return size;}
+
 		int search(T a)
-		{
+		{// linear search
 			for(unsigned int i=0;i<size;i++)
 			{
 				if(newheap[i]==a)
@@ -165,19 +149,22 @@ class heap
 			}
 			return -1;
 		}
+
+		// return the indeces of relevant nodes.
 		int left(int i){return 2*i + 1;}
 		int right(int i){return 2*i + 2;}
 		int parent(int i) {return (i-1)/2;}
-		void swap(T *x, T *y)
+		
+		void swap(T *x, T *y) // swap two heap elements
 		{
 			T temp = *x;
 			*x = *y;
 			*y = temp;
 		}
 	private:
-		int size;
-		bool is_min;
-		std::vector<T> newheap;
+		int size; // the size of this heap
+		bool is_min; // true if minHeap; false if maxHeap.
+		std::vector<T> newheap; // the container for heap
 };
 
 
